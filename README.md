@@ -1,13 +1,12 @@
-+ ## Repository Fork Details
-+ 
-+ This repository has been forked from https://github.com/bythepixel/urlchecker for the following two reasons:
-+ 
-+ 1. **Reason One:** Each test failure sends a seperate message to slack/teams which can get messy if there are allot of tests for a single domain. This will be combined into a single message.  
-+ 
-+ 2. **Reason Two:** The original code tests every return status for a single URL, we just want to check the first one. 
-+ 
-+ Special thanks to the people at bythepixel for the original GitHub Action that inspired this fork.
-
+> **Note**
+> ## Repository Fork Details
+> This repository has been forked from https://github.com/bythepixel/urlchecker for the following reasons:
+>
+> 1. Each test failure sends a seperate message to slack/teams which can get messy if there are allot of tests for a single domain. This will be combined into a single message.  
+>
+> 2. The original code tests every return status for a single URL, we just want to check the first one. 
+>
+> Special thanks to the people at bythepixel for the original GitHub Action that inspired this fork.
 
 # urlchecker
 

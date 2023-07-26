@@ -14,8 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bythepixel/urlchecker/pkg/client"
-	"github.com/bythepixel/urlchecker/pkg/config"
+	"github.com/libis/urlchecker-extended/pkg/client"
+	"github.com/libis/urlchecker-extended/pkg/config"
 )
 
 type Messager interface {

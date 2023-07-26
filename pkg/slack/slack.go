@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bythepixel/urlchecker/pkg/config"
+	"github.com/libis/urlchecker-extended/pkg/config"
 )
 
 // SlackWebhookPayload represents the minimum required fields to send a webhook.

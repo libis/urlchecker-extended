@@ -41,12 +41,12 @@ func (c SlackClient) SendMessage(messages []Message) {
 
 	// loop over messages and format them
 	for _, message := range messages {
-		msg := fmt.Sprintf("Status: %d, URL: <%s|%s>, Message: %s", message.Status, message.Url, message.Url, message.Message)
+		msg := fmt.Sprintf("Status: %d, URL: <%s|link>, Message: %s", message.Status, message.Url, message.Message)
 		formattedMessages = append(formattedMessages, msg)
 	}
 
 	// concatenate all formatted messages
-	allMessages := fmt.Sprintf("Repository: <%s|%s>, Messages: \n%s", repo, repo, strings.Join(formattedMessages, "\n"))
+	allMessages := fmt.Sprintf("Repository: \n%s %s", repo, strings.Join(formattedMessages, "\n"))
 
 	pl := SlackWebhookPayload{
 		Text: allMessages,

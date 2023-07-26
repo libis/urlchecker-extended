@@ -6,9 +6,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/bythepixel/urlchecker/pkg/checker"
-	"github.com/bythepixel/urlchecker/pkg/config"
-	"github.com/bythepixel/urlchecker/pkg/slack"
+	"github.com/libis/urlchecker-extended/pkg/checker"
+	"github.com/libis/urlchecker-extended/pkg/config"
+	"github.com/libis/urlchecker-extended/pkg/slack"
 )
 
 func main() {

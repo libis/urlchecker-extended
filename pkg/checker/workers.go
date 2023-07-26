@@ -38,9 +38,6 @@ func XMLWorker(ctx context.Context, cancel context.CancelFunc, urlChan chan stri
 			if status != 200 {
 				log.Println(status)
 
-				//msg := fmt.Sprintf("Invalid HTTP Response Status %d", status)
-				//messager.SendMessage(status, url, msg)
-
 				msg := fmt.Sprintf("Invalid HTTP Response Status %d", status)
 				messages = append(messages, slack.Message{Status: status, Url: url, Message: msg})
 				atomic.AddUint64(errorCount, 1)

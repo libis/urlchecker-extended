@@ -46,7 +46,7 @@ func (c SlackClient) SendMessage(messages []Message) {
 	}
 
 	// concatenate all formatted messages
-	allMessages := fmt.Sprintf("Repository: \n%s %s", repo, strings.Join(formattedMessages, "\n"))
+	allMessages := fmt.Sprintf("Repository: %s\n %s", repo, strings.Join(formattedMessages, "\n"))
 
 	pl := SlackWebhookPayload{
 		Text: allMessages,

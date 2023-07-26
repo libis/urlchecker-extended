@@ -10,12 +10,15 @@ import (
 
 	"github.com/libis/urlchecker-extended/pkg/client"
 	"github.com/libis/urlchecker-extended/pkg/config"
+	"github.com/libis/urlchecker-extended/pkg/slack"
 )
 
 var maxErrors uint64 = 5
 
 func XMLWorker(ctx context.Context, cancel context.CancelFunc, urlChan chan string, id int, messager Messager, wg *sync.WaitGroup, sleep time.Duration, errorCount *uint64) {
 	defer wg.Done()
+
+	messages := []slack.Message{} // initialize the slice to store messages
 	for {
 		select {
 		case url, ok := <-urlChan:
@@ -34,8 +37,12 @@ func XMLWorker(ctx context.Context, cancel context.CancelFunc, urlChan chan stri
 
 			if status != 200 {
 				log.Println(status)
+
+				//msg := fmt.Sprintf("Invalid HTTP Response Status %d", status)
+				//messager.SendMessage(status, url, msg)
+
 				msg := fmt.Sprintf("Invalid HTTP Response Status %d", status)
-				messager.SendMessage(status, url, msg)
+				messages = append(messages, slack.Message{Status: status, Url: url, Message: msg})
 				atomic.AddUint64(errorCount, 1)
 			}
 
@@ -46,9 +53,11 @@ func XMLWorker(ctx context.Context, cancel context.CancelFunc, urlChan chan stri
 
 			time.Sleep(sleep * time.Second)
 		case <-ctx.Done():
+			if len(messages) > 0 {
+				messager.SendMessage(messages) // send collected messages
+			}
 			return
 		}
 
 	}
-
 }

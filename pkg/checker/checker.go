@@ -20,7 +20,7 @@ import (
 )
 
 type Messager interface {
-	SendMessage(messages []Message)
+	SendMessage(messages []slack.Message)
 }
 
 type HealthCheck struct {

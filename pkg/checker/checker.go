@@ -16,10 +16,11 @@ import (
 
 	"github.com/libis/urlchecker-extended/pkg/client"
 	"github.com/libis/urlchecker-extended/pkg/config"
+	"github.com/libis/urlchecker-extended/pkg/slack"
 )
 
 type Messager interface {
-	SendMessage(status int, url string, message string)
+	SendMessage(messages []Message)
 }
 
 type HealthCheck struct {
@@ -58,6 +59,7 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 	defer cancel()
 
 	var errorCount uint64 = 0
+	messages := []slack.Message{} // initialize the slice to store messages
 
 	for _, check := range urls {
 		fmt.Printf(".")
@@ -73,7 +75,7 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 
 		if status != check.Status {
 			msg := fmt.Sprintf("Invalid HTTP Response Status %d", status)
-			messager.SendMessage(status, url, msg)
+			messages = append(messages, slack.Message{Status: status, Url: url, Message: msg})
 			continue
 		}
 
@@ -88,7 +90,7 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 
 			matches := re.MatchString(body)
 			if !matches {
-				messager.SendMessage(status, url, "HTTP Response Body Error")
+				messages = append(messages, slack.Message{Status: status, Url: url, Message: "HTTP Response Body Error"})
 				continue
 			}
 		}
@@ -127,5 +129,9 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 		if config.Debug {
 			log.Printf("%s Good\n", url)
 		}
+	}
+
+	if len(messages) > 0 {
+		messager.SendMessage(messages) // send collected messages
 	}
 }

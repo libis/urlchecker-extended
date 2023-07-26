@@ -8,8 +8,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/bythepixel/urlchecker/pkg/client"
-	"github.com/bythepixel/urlchecker/pkg/config"
+	"github.com/libis/urlchecker-extended/pkg/client"
+	"github.com/libis/urlchecker-extended/pkg/config"
 )
 
 var maxErrors uint64 = 5

@@ -16,7 +16,8 @@ import (
 //
 // https://api.slack.com/messaging/webhooks
 type SlackWebhookPayload struct {
-	Text string `json:"text"`
+	Text   string `json:"text"`
+	Mrkdwn bool   `json:"mrkdwn"`
 }
 
 // Message represents the status, url and message fields to send a webhook.
@@ -41,12 +42,12 @@ func (c SlackClient) SendMessage(messages []Message) {
 
 	// loop over messages and format them
 	for _, message := range messages {
-		msg := fmt.Sprintf("Status: %d, URL: <%s|link>, Message: %s", message.Status, message.Url, message.Message)
+		msg := fmt.Sprintf("URL: <%s|link>, Message: %s", message.Url, message.Message)
 		formattedMessages = append(formattedMessages, msg)
 	}
 
 	// concatenate all formatted messages
-	allMessages := fmt.Sprintf("Repository: %s\n %s", repo, strings.Join(formattedMessages, "\n"))
+	allMessages := fmt.Sprintf("Repository: %s\n\n%s", repo, strings.Join(formattedMessages, "\n\n"))
 
 	pl := SlackWebhookPayload{
 		Text: allMessages,

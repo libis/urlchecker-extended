@@ -42,7 +42,7 @@ func (c SlackClient) SendMessage(messages []Message) {
 
 	// loop over messages and format them
 	for _, message := range messages {
-		msg := fmt.Sprintf("URL: <%s|link>, Message: %s", message.Url, message.Message)
+		msg := fmt.Sprintf("URL: <%s>, Message: %s", message.Url, message.Message)
 		formattedMessages = append(formattedMessages, msg)
 	}
 

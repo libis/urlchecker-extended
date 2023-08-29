@@ -16,7 +16,7 @@ func Fetch(url string) (int, string, error) {
 
 	client := &http.Client{
 		Transport: tr,
-		Timeout:   time.Second * 10,
+		Timeout:   time.Second * 100,
 	}
 
 	resp, err := client.Get(url)

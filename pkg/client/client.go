@@ -25,16 +25,14 @@ func Fetch(url string) (int, string, error) {
 		Transport: tr,
 		Timeout:   time.Second * 10,
 	}
-
+	defer client.CloseIdleConnections() // Cleanup any old connections
 	resp, err := client.Get(url)
-
-	if resp != nil {
-		defer resp.Body.Close()
-	}
 
 	if err != nil {
 		return 0, "", err
 	}
+
+	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

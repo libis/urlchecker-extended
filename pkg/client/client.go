@@ -12,7 +12,7 @@ func Fetch(url string) (int, string, error) {
 	// resp, err := http.Get(url)
 
 	var netClient = &http.Client{
-		Timeout: time.Second * 10,
+		Timeout: time.Second * 100,
 	}
 
 	resp, err := netClient.Get(url)

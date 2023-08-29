@@ -3,19 +3,18 @@ package client
 import (
 	"io/ioutil"
 	"net/http"
-	"time"
 )
 
 // Fetch fetches a URL and returns information about the response.
 func Fetch(url string) (int, string, error) {
 
-	// resp, err := http.Get(url)
+	resp, err := http.Get(url)
 
-	var netClient = &http.Client{
-		Timeout: time.Second * 100,
-	}
+	//var netClient = &http.Client{
+	//	Timeout: time.Second * 100,
+	//}
+	//resp, err := netClient.Get(url)
 
-	resp, err := netClient.Get(url)
 	if resp != nil {
 		defer resp.Body.Close()
 	}

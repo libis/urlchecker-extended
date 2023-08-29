@@ -1,7 +1,7 @@
 package client
 
 import (
-	"context"
+	"crypto/tls"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -12,31 +12,25 @@ func Fetch(url string) (int, string, error) {
 
 	//resp, err := http.Get(url)
 
-	//tr := &http.Transport{
-	//	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	//}
-
-	//client := &http.Client{
-	//	Transport: tr,
-	//	Timeout:   time.Second * 10,
-	//}
-	//defer client.CloseIdleConnections() // Cleanup any old connections
-	//resp, err := client.Get(url)
-
-	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
-	defer cancel()
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-	if err != nil {
-		return 0, "", err
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 
-	resp, err := http.DefaultClient.Do(req)
+	client := &http.Client{
+		Transport: tr,
+		Timeout:   time.Second * 30,
+	}
+
+	resp, err := client.Get(url)
 
 	if err != nil {
 		return 0, "", err
 	}
 
+	// Cleanup
+	defer client.CloseIdleConnections()
 	defer resp.Body.Close()
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return 0, "", err

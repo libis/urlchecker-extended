@@ -33,7 +33,7 @@ func Fetch(url string) (int, string, error) {
 	}
 
 	defer resp.Body.Close()
-
+	tr.CloseIdleConnections()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return 0, "", err

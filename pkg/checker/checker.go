@@ -82,7 +82,7 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 			log.Printf("Error: %s\n", err.Error())
 		}
 
-		if isValidStatus(check.ExpectedStatuses, status) {
+		if !isValidStatus(check.ExpectedStatuses, status) {
 			msg := fmt.Sprintf("Invalid HTTP Response Status %d", status)
 			messages = append(messages, slack.Message{Status: status, Url: url, Message: msg})
 			continue

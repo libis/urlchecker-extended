@@ -1,8 +1,8 @@
 > **Note**
 > ## Repository Fork Details
-> This repository has been forked from https://github.com/bythepixel/urlchecker for the following reason(s):
+> This repository has been forked from https://github.com/bythepixel/urlchecker, the following changes have been made:
 >
-> 1. Each test failure sends a seperate message to slack/teams which can get messy if there are allot of tests for a single domain. This will be combined into a single message.  
+> 1. Slack/Teams message has been combined into single message per hostname. Previously it was sending one message per URL.
 >
 > 2. The 'status' parameter in the URLs file is now called 'expected_statuses' and is an array (see example below).
 >
@@ -46,7 +46,7 @@ jobs:
 [
     {
         "url": "/status/200",
-        "expected_statuses": [200, 201]
+        "expected_statuses": [200]
     },
     {
         "url": "/status/200",
@@ -55,7 +55,7 @@ jobs:
     {
         "url": "/status/200",
         "expected_statuses": [200, 201]
-        "regex": "200"
+        "regex": "Text in response body."
     },
     {
         "path": "/store-sitemap.xml",

@@ -79,7 +79,7 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 
 		status, body, err := client.Fetch(url)
 		if err != nil {
-			log.Printf("Error: %s\n", err.Error())
+			fmt.Printf("Error: %s\n", err.Error())
 		}
 
 		if !isValidStatus(check.ExpectedStatuses, status) {

@@ -16,15 +16,17 @@ func Fetch(url string) (int, string, error) {
 	}
 
 	resp, err := netClient.Get(url)
+	if resp != nil {
+		defer resp.Body.Close()
+	}
 
 	if err != nil {
 		return 1, "", err
 	}
-	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return 1, "", err
+		return 2, "", err
 	}
 
 	return resp.StatusCode, string(body), nil

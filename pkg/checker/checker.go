@@ -30,8 +30,8 @@ type HealthCheck struct {
 	// Regex used to check the body of the response
 	Regex string `json:"regex"`
 
-	// Status code expected from URL
-	Status int `json:"status"`
+	// Status codes expected from URL
+	ExpectedStatuses []int `json:"expected_statuses"`
 
 	// XMLSitemap indicates the Path to check is an XML Sitemap
 	XMLSitemap bool `json:"xml_sitemap"`
@@ -41,6 +41,15 @@ type XMLSitemap struct {
 	URL []struct {
 		Location string `xml:"loc"`
 	} `xml:"url"`
+}
+
+func isValidStatus(expected []int, status int) bool {
+	for _, expStatus := range expected {
+		if status == expStatus {
+			return true
+		}
+	}
+	return false
 }
 
 func Check(filename, protocol, hostname string, messager Messager, workers int, sleep time.Duration) {
@@ -73,7 +82,7 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 			log.Printf("Error: %s\n", err.Error())
 		}
 
-		if status != check.Status {
+		if isValidStatus(check.ExpectedStatuses, status) {
 			msg := fmt.Sprintf("Invalid HTTP Response Status %d", status)
 			messages = append(messages, slack.Message{Status: status, Url: url, Message: msg})
 			continue

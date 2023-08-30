@@ -5,13 +5,15 @@
 > 1. Slack/Teams message has been combined into single message per hostname. Previously it was sending one message per URL.
 >
 > 2. The 'status' parameter in the URLs file is now called 'expected_statuses' and is an array (see example below).
+> 
+> 3. Refactored the http call to allow for invalid certificates.
 >
 > Special thanks to the people at bythepixel for the original GitHub Action that inspired this fork.
 
 # urlchecker
 
 ## Description
-This GitHub Action reads a JSON file containing the URLs to check, crawls the URLs, and checks the resposne status against an array of acceptable statuses.
+This GitHub Action reads a JSON file containing the URLs to check, and along with the hostname, crawls the URLs, and checks the response status against an array of acceptable statuses.
 
 Below is an example YAML file for this action.
 

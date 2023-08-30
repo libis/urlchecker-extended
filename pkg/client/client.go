@@ -10,6 +10,7 @@ import (
 // Fetch fetches a URL and returns information about the response.
 func Fetch(url string) (int, string, error) {
 
+	// This allows invalid certs
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
@@ -23,9 +24,6 @@ func Fetch(url string) (int, string, error) {
 	if err != nil {
 		return 0, "", err
 	}
-
-	// Add User-Agent header
-	req.Header.Set("User-Agent", "Prometheus/2.40.5")
 
 	resp, err := client.Do(req)
 

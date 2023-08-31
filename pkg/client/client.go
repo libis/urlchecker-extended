@@ -32,7 +32,6 @@ func Fetch(url string) (int, string, error) {
 	}
 
 	// Cleanup
-
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)

@@ -15,6 +15,7 @@ func Fetch(url string) (int, string, error) {
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 
+	//Set timeout
 	client := &http.Client{
 		Transport: tr,
 		Timeout:   time.Second * 100,
@@ -27,7 +28,6 @@ func Fetch(url string) (int, string, error) {
 	}
 
 	// Cleanup
-
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)

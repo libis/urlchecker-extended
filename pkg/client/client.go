@@ -15,17 +15,13 @@ func Fetch(url string) (int, string, error) {
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 
+	//Set timeout
 	client := &http.Client{
 		Transport: tr,
-		Timeout:   time.Second * 10,
+		Timeout:   time.Second * 100,
 	}
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return 0, "", err
-	}
-
-	resp, err := client.Do(req)
+	resp, err := client.Get(url)
 
 	if err != nil {
 		return 0, "", err
@@ -39,6 +35,5 @@ func Fetch(url string) (int, string, error) {
 		return 0, "", err
 	}
 
-	client.CloseIdleConnections() //Cleanup connection
 	return resp.StatusCode, string(body), nil
 }

@@ -1,6 +1,6 @@
 [
     {
         "path": "/status/400",
-        "status": 400
+        "status": [403, 404]
     }
 ]

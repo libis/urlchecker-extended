@@ -135,9 +135,7 @@ func Check(filename, protocol, hostname string, messager Messager, workers int, 
 
 		time.Sleep(sleep * time.Second)
 
-		if config.Debug {
-			log.Printf("%s Good\n", url)
-		}
+		fmt.Printf("%s status was %d", url, status)
 	}
 
 	if len(messages) > 0 {

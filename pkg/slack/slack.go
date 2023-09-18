@@ -55,6 +55,7 @@ func (c SlackClient) SendMessage(messages []Message) {
 
 	jsonPayload, _ := json.Marshal(pl)
 
+	fmt.Printf("Sending message to " + c.Webhook)
 	_, err := http.Post(c.Webhook, "application/json", bytes.NewBuffer(jsonPayload))
 
 	if err != nil {
